@@ -10,9 +10,13 @@ class ThemeConfig {
   static Color lightBG = Colors.white;
   static Color darkBG = Colors.black45;
 
+  static Color lightPlaceHolder = Colors.white70;
+  static Color darkPlaceHolder = Colors.white;
+
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     backgroundColor: lightBG,
+    hintColor: lightPlaceHolder,
     primaryColor: lightPrimary,
     scaffoldBackgroundColor: lightBG,
     accentColor: lightAccent,
@@ -25,6 +29,7 @@ class ThemeConfig {
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     backgroundColor: darkBG,
+    hintColor: darkPlaceHolder,
     primaryColor: darkPrimary,
     accentColor: darkAccent,
     scaffoldBackgroundColor: darkBG,
