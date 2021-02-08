@@ -73,7 +73,7 @@ class AppFormField extends StatelessWidget {
               fontFamily: 'Montserrat',
               letterSpacing: 0.5,
               fontStyle: FontStyle.normal,
-              fontWeight: fontWeight != null ? fontWeight : FontWeight.w600,
+              fontWeight: fontWeight != null ? fontWeight : FontWeight.w500,
             ),
             initialValue: initialValue,
             onChanged: (val) {

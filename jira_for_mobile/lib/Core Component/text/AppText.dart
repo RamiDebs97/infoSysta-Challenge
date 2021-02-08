@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class FormFieldLabelText extends StatelessWidget {
+class AppLabelText extends StatelessWidget {
   final String label;
-  const FormFieldLabelText({Key key, this.label}) : super(key: key);
+  const AppLabelText({Key key, this.label}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class FormFieldLabelText extends StatelessWidget {
           color: Theme.of(context).accentColor,
           letterSpacing: 0.5,
           fontWeight: FontWeight.w500,
-          fontSize: 12,
+          fontSize: 14,
           height: 1.25),
     );
   }
