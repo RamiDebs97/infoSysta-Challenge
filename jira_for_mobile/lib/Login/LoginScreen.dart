@@ -62,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onChanged: (text) {
                     // controller.email = text.trim();
                   },
+                  validator: controller.validateUrl,
                   hint: 'Project URL',
                   label: 'Project URL',
                   // validator: controller.validateEmail,
@@ -71,6 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onChanged: (text) {
                     // controller.email = text.trim();
                   },
+                  validator: controller.validateEmail,
                   hint: 'Your Email',
                   label: 'Email',
                   // validator: controller.validateEmail,
@@ -81,6 +83,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   onChanged: (text) {
                     //controller.password = text;
                   },
+                  autoValidate: true,
+                  validator: controller.validateToken,
                   hint: 'Your Token',
                   label: 'Token',
                   //validator: controller.validatePassword,
@@ -103,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     label: 'login',
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
-                        controller.setDynamicLoading();
+                        controller.setLoading(true);
                       }
                     },
                     //loading: controller.loading,
