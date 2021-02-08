@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:jira_for_mobile/Login/LoginProvider.dart';
 import 'package:jira_for_mobile/Login/LoginScreen.dart';
 import 'package:jira_for_mobile/Util/Constants.dart';
 import 'package:jira_for_mobile/theme/theme_config.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MainApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => LoginProvider()),
+  ], child: MainApp()));
 }
 
 class MainApp extends StatelessWidget {
