@@ -15,6 +15,7 @@ class AppFormField extends StatelessWidget {
   final bool obscureText;
   final bool autoFocus;
   final Widget suffixIcon;
+  final Widget prefixIcon;
   final TextInputAction textInputAction;
   final TextEditingController controller;
   final TextCapitalization textCapitalization;
@@ -49,7 +50,8 @@ class AppFormField extends StatelessWidget {
       this.autoValidate,
       this.boarderColor,
       this.fontWeight,
-      this.contentPaddingHor})
+      this.contentPaddingHor,
+      this.prefixIcon})
       : super(key: key);
 
   @override
@@ -89,10 +91,13 @@ class AppFormField extends StatelessWidget {
             textCapitalization:
                 textCapitalization ?? TextCapitalization.sentences,
             enabled: enabled,
-            autovalidate: autoValidate != null ? autoValidate : false,
+            autovalidateMode: autoValidate != null
+                ? AutovalidateMode.onUserInteraction
+                : AutovalidateMode.disabled,
             keyboardType: inputType,
             maxLines: maxLines ?? 1,
             decoration: InputDecoration(
+                prefixIcon: prefixIcon,
                 contentPadding: EdgeInsets.symmetric(
                     vertical: 12,
                     horizontal:

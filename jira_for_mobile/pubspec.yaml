@@ -23,6 +23,8 @@ dev_dependencies:
 
 
 flutter:
+  assets:
+    - assets/Images/
 
   fonts:
     - family: Montserrat

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:jira_for_mobile/Login/LoginScreen.dart';
 import 'package:jira_for_mobile/Util/Constants.dart';
 import 'package:jira_for_mobile/theme/theme_config.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MainApp());
 }
 
-class MyApp extends StatelessWidget {
+class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,21 +15,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: themeData(ThemeConfig.lightTheme),
       darkTheme: themeData(ThemeConfig.darkTheme),
-      home: MyHomePage(),
+      home: LoginScreen(),
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(body: Container());
   }
 }
 
