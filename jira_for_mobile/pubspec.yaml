@@ -15,6 +15,7 @@ dependencies:
   cached_network_image: any
   shared_preferences: any
   lottie: any
+  webview_flutter: any
 
   flutter:
     sdk: flutter

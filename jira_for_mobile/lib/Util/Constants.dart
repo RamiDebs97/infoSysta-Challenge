@@ -6,4 +6,8 @@ class Constants {
   //App Path
   static String logoPath = 'assets/Images/logo.png';
   static String jiraAnimationPath = 'assets/Animation/jira.json';
+
+  //URLs
+  static String jiraTokenUrl =
+      'https://id.atlassian.com/manage-profile/security/api-tokens';
 }

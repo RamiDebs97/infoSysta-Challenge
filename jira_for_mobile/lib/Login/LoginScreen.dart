@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:jira_for_mobile/Core%20Component/buttons/submit_button.dart';
@@ -11,6 +13,7 @@ import 'package:jira_for_mobile/Util/Constants.dart';
 import 'package:jira_for_mobile/Util/Functions.dart';
 import 'package:jira_for_mobile/Util/app_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -26,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
+    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
     SchedulerBinding.instance.addPostFrameCallback(
         (_) => Provider.of<LoginProvider>(context, listen: false));
   }
@@ -95,7 +99,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 Padding(
                     padding: EdgeInsets.only(bottom: 8),
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        _scaffoldKey.currentState
+                            .showBottomSheet((context) => WebView(
+                                  initialUrl: Constants.jiraTokenUrl,
+                                  gestureNavigationEnabled: true,
+                                  debuggingEnabled: true,
+                                  javascriptMode: JavascriptMode.unrestricted,
+                                ));
+                      },
                       child: AppLabelText(
                         label: "Generate Token",
                         color: Theme.of(context).primaryColor,
