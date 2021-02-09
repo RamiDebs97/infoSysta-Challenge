@@ -1,0 +1,1 @@
+enum PageState { LOADED, LOADING, NO_DATA, ERROR }
