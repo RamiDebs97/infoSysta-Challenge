@@ -131,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 message: Functions.checkApiError(onError),
               );
             });
-        controller.setDynamicLoading();
+        controller.setLoading(false);
       });
       if (listOfTasks != null) {
         if (listOfTasks.isNotEmpty) {
@@ -150,8 +150,8 @@ class _LoginScreenState extends State<LoginScreen> {
               });
         }
       }
-      controller.setDynamicLoading();
     }
+    controller.setDynamicLoading();
   }
 
   @override

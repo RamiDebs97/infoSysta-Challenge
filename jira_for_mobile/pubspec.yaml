@@ -12,6 +12,7 @@ environment:
 dependencies:
   provider: any
   dio: any
+  cached_network_image: any
   flutter:
     sdk: flutter
 
