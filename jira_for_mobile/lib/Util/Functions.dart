@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
+
 class Functions {
   static String checkApiError(e) {
+    debugPrint(e.toString());
     if (isConnectionError(e)) {
       return "Connection Error";
     } else {

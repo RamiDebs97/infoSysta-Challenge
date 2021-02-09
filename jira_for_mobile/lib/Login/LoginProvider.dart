@@ -11,15 +11,17 @@ class LoginProvider extends ChangeNotifier {
   int startAt = 0;
 
   Future<List<Issue>> getListOfTasks() async {
-    await apiService.getTasksList(email, token, url, startAt).then((response) {
-      return response != null ? response : List();
-    }).catchError((onError) {
+    List<Issue> listOfTasks = List();
+    listOfTasks = await apiService
+        .getTasksList(email, token, url, startAt)
+        .catchError((onError) {
+      debugPrint(onError.toString());
       if (onError is DioError) {
         throw ("Error " + onError.message.toString());
       }
       throw ("Error " + onError.toString());
     });
-    return null;
+    return listOfTasks;
   }
 
   void setEmail(newValue) {

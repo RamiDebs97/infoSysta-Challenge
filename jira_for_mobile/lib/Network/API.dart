@@ -23,25 +23,24 @@ class Api {
       "startAt": startAt,
     };
 
-    await Dio()
+    Response response = await Dio()
         .get(tasksURL,
             queryParameters: queryParameters,
             options: Options(headers: {'authorization': basicAuth}))
-        .then((response) {
-      if (response.statusCode == 200) {
-        debugPrint(response.data.toString());
-        jiraTaskResponse = JiraTaskResponse.fromJson(response.data);
-        return jiraTaskResponse.issues;
-      } else {
-        throw ('Error ${response.statusMessage}');
-      }
-    }).catchError((onError) {
+        .catchError((onError) {
       if (onError is DioError) {
         throw (onError.message);
       }
       throw ('Error ${onError.toString()}');
     });
 
-    return List();
+    debugPrint(response.statusCode.toString());
+    if (response.statusCode == 200) {
+      debugPrint(response.data.toString());
+      jiraTaskResponse = JiraTaskResponse.fromJson(response.data);
+      return jiraTaskResponse.issues;
+    } else {
+      throw ('Error ${response.statusMessage}');
+    }
   }
 }

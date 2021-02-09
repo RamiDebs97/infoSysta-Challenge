@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jira_for_mobile/Home/HomeScreen.dart';
 import 'package:jira_for_mobile/Login/LoginProvider.dart';
 import 'package:jira_for_mobile/Login/LoginScreen.dart';
 import 'package:jira_for_mobile/Util/Constants.dart';
@@ -20,6 +21,9 @@ class MainApp extends StatelessWidget {
       theme: themeData(ThemeConfig.lightTheme),
       darkTheme: themeData(ThemeConfig.darkTheme),
       home: LoginScreen(),
+      routes: <String, WidgetBuilder>{
+        "/home_screen": (BuildContext context) => HomeScreen(),
+      },
     );
   }
 }

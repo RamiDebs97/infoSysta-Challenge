@@ -5,6 +5,7 @@ import 'package:jira_for_mobile/Core%20Component/main/app_scaffold.dart';
 import 'package:jira_for_mobile/Core%20Component/text/AppText.dart';
 import 'package:jira_for_mobile/Core%20Component/text_fileds/app_form_field.dart';
 import 'package:jira_for_mobile/Login/LoginProvider.dart';
+import 'package:jira_for_mobile/Models/Issue.dart';
 import 'package:jira_for_mobile/Util/Constants.dart';
 import 'package:jira_for_mobile/Util/Functions.dart';
 import 'package:jira_for_mobile/Util/app_dialog.dart';
@@ -121,8 +122,23 @@ class _LoginScreenState extends State<LoginScreen> {
   void loginButtonClicked(LoginProvider controller) async {
     if (_formKey.currentState.validate()) {
       controller.setLoading(true);
-      await controller.getListOfTasks().then((value) {
-        if (value.isNotEmpty) {
+      List<Issue> listOfTasks =
+          await controller.getListOfTasks().catchError((onError) {
+        showDialog(
+            context: context,
+            builder: (ctx) {
+              return AppDialog(
+                message: Functions.checkApiError(onError),
+              );
+            });
+        controller.setDynamicLoading();
+      });
+      if (listOfTasks != null) {
+        if (listOfTasks.isNotEmpty) {
+          Navigator.of(context)
+              .pushReplacementNamed('/home_screen', arguments: {
+            'listOfTasks': listOfTasks,
+          });
         } else {
           showDialog(
               context: context,
@@ -133,18 +149,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 );
               });
         }
-        controller.setDynamicLoading();
-      }).catchError((onError) {
-        showDialog(
-            context: context,
-            builder: (ctx) {
-              return AppDialog(
-                message: Functions.checkApiError(onError),
-              );
-            });
-        controller.setDynamicLoading();
-      });
-      controller.setLoading(false);
+      }
+      controller.setDynamicLoading();
     }
   }
 
