@@ -6,6 +6,8 @@ import 'package:jira_for_mobile/Core%20Component/text/AppText.dart';
 import 'package:jira_for_mobile/Core%20Component/text_fileds/app_form_field.dart';
 import 'package:jira_for_mobile/Login/LoginProvider.dart';
 import 'package:jira_for_mobile/Util/Constants.dart';
+import 'package:jira_for_mobile/Util/Functions.dart';
+import 'package:jira_for_mobile/Util/app_dialog.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -59,35 +61,34 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 AppFormField(
                   prefixIcon: Icon(Icons.link),
-                  onChanged: (text) {
-                    // controller.email = text.trim();
+                  onChanged: (url) {
+                    controller.setUrl(url);
                   },
+                  autoValidate: true,
                   validator: controller.validateUrl,
                   hint: 'Project URL',
                   label: 'Project URL',
-                  // validator: controller.validateEmail,
                 ),
                 AppFormField(
                   prefixIcon: Icon(Icons.email),
-                  onChanged: (text) {
-                    // controller.email = text.trim();
+                  onChanged: (email) {
+                    controller.setEmail(email.trim());
                   },
+                  autoValidate: true,
                   validator: controller.validateEmail,
                   hint: 'Your Email',
                   label: 'Email',
-                  // validator: controller.validateEmail,
                 ),
                 AppFormField(
                   obscureText: true,
                   prefixIcon: Icon(Icons.lock_outline_sharp),
-                  onChanged: (text) {
-                    //controller.password = text;
+                  onChanged: (token) {
+                    controller.setToken(token);
                   },
                   autoValidate: true,
                   validator: controller.validateToken,
                   hint: 'Your Token',
                   label: 'Token',
-                  //validator: controller.validatePassword,
                 ),
                 Padding(
                     padding: EdgeInsets.only(bottom: 8),
@@ -105,11 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     loading: controller.loading ? true : false,
                     color: Theme.of(context).primaryColor,
                     label: 'login',
-                    onPressed: () {
-                      if (_formKey.currentState.validate()) {
-                        controller.setLoading(true);
-                      }
-                    },
+                    onPressed: () => loginButtonClicked(controller),
                     //loading: controller.loading,
                   ),
                 ),
@@ -119,6 +116,36 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
     });
+  }
+
+  void loginButtonClicked(LoginProvider controller) async {
+    if (_formKey.currentState.validate()) {
+      controller.setLoading(true);
+      await controller.getListOfTasks().then((value) {
+        if (value.isNotEmpty) {
+        } else {
+          showDialog(
+              context: context,
+              builder: (ctx) {
+                return AppDialog(
+                  message:
+                      "The List of Tasks is Empty, or there is something wrong",
+                );
+              });
+        }
+        controller.setDynamicLoading();
+      }).catchError((onError) {
+        showDialog(
+            context: context,
+            builder: (ctx) {
+              return AppDialog(
+                message: Functions.checkApiError(onError),
+              );
+            });
+        controller.setDynamicLoading();
+      });
+      controller.setLoading(false);
+    }
   }
 
   @override
