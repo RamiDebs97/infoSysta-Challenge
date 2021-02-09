@@ -32,7 +32,7 @@ class SharedPreferenceWrapper {
       bool isLoggedIn = pref.getBool(isLoggedInTag);
       user = new User(emailStr, tokenStr, urlStr, isLoggedIn);
       if (isLoggedIn == null) {
-        user = User(null, null, null, false);
+        user.isLoggedIn = false;
       }
       return user;
     });

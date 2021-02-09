@@ -17,6 +17,7 @@ class HomeProvider extends ChangeNotifier {
   Api apiService = Api();
   //needed for pagination later on
   int startAt = 0;
+  List<Issue> allIssues = List();
 
   Future<List<Issue>> getListOfTasks() async {
     setPageState(PageState.LOADING);
@@ -40,11 +41,17 @@ class HomeProvider extends ChangeNotifier {
     } else {
       setPageState(PageState.LOADED);
     }
+    setData(listOfTasks);
     return listOfTasks;
   }
 
   void setPageState(PageState pageState) {
     this.pageState = pageState;
+    notifyListeners();
+  }
+
+  void setData(newData) {
+    allIssues = newData;
     notifyListeners();
   }
 

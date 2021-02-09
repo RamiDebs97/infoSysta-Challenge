@@ -20,7 +20,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Widget> allTasks = List();
   List<Issue> allIssues = List();
 
   @override
@@ -37,6 +36,57 @@ class _HomeScreenState extends State<HomeScreen> {
     if (arguments != null) {
       allIssues = arguments['listOfTasks'];
     }
+
+    return Consumer<HomeProvider>(
+        builder: (BuildContext context, HomeProvider controller, Widget child) {
+      if (allIssues.isNotEmpty) {
+        controller.allIssues = allIssues;
+      }
+      return RefreshIndicator(
+          onRefresh: () {
+            return controller.getListOfTasks();
+          },
+          child: AppScaffold(
+              onRetrySelected: controller.getListOfTasks,
+              pageState: controller.pageState,
+              errorMessage: controller.errorMessage,
+              appBar: AppBar(
+                title: AppLabelText(
+                  label: Constants.yourTasks,
+                  color: Theme.of(context).hintColor,
+                ),
+                actions: [
+                  GestureDetector(
+                    onTap: () {},
+                    child: Icon(Icons.nightlight_round),
+                  ),
+                  Padding(
+                      padding: EdgeInsets.only(left: 8, right: 8),
+                      child: GestureDetector(
+                        onTap: () async {
+                          await SharedPreferenceWrapper
+                                  .deleteAllDataFromSharedPreference()
+                              .then((value) => exit(0));
+                        },
+                        child: Icon(Icons.exit_to_app),
+                      )),
+                ],
+              ),
+              body: TasksList(
+                allIssues: controller.allIssues,
+              )));
+    });
+  }
+}
+
+class TasksList extends StatelessWidget {
+  final List<Issue> allIssues;
+
+  const TasksList({Key key, this.allIssues}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> allTasks = List();
     allIssues.forEach((issue) {
       allTasks.add(IssueItem(
         summary: issue.fields.summary.toString(),
@@ -51,43 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
         reporter: issue.fields.reporter.displayName.toString(),
       ));
     });
-
-    return Consumer<HomeProvider>(
-        builder: (BuildContext context, HomeProvider controller, Widget child) {
-      return RefreshIndicator(
-          onRefresh: () {
-            return controller.getListOfTasks();
-          },
-          child: AppScaffold(
-            onRetrySelected: controller.getListOfTasks,
-            pageState: controller.pageState,
-            errorMessage: controller.errorMessage,
-            appBar: AppBar(
-              title: AppLabelText(
-                label: Constants.yourTasks,
-                color: Theme.of(context).hintColor,
-              ),
-              actions: [
-                GestureDetector(
-                  onTap: () {},
-                  child: Icon(Icons.nightlight_round),
-                ),
-                Padding(
-                    padding: EdgeInsets.only(left: 8, right: 8),
-                    child: GestureDetector(
-                      onTap: () async {
-                        await SharedPreferenceWrapper
-                                .deleteAllDataFromSharedPreference()
-                            .then((value) => exit(0));
-                      },
-                      child: Icon(Icons.exit_to_app),
-                    )),
-              ],
-            ),
-            body: ListView(
-              children: allTasks,
-            ),
-          ));
-    });
+    return ListView(
+      children: allTasks,
+    );
   }
 }
