@@ -104,7 +104,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             .showBottomSheet((context) => WebView(
                                   initialUrl: Constants.jiraTokenUrl,
                                   gestureNavigationEnabled: true,
-                                  debuggingEnabled: true,
                                   javascriptMode: JavascriptMode.unrestricted,
                                 ));
                       },
@@ -166,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       }
     }
-    controller.setDynamicLoading();
+    controller.setLoading(false);
   }
 
   @override
