@@ -24,15 +24,15 @@ class SharedPreferenceWrapper {
   }
 
   static Future<User> getUserData() {
-    User user = User(null, null, null, false);
+    User user;
     return SharedPreferences.getInstance().then((pref) {
       String emailStr = pref.getString(emailTag);
       String tokenStr = pref.getString(tokenTag);
       String urlStr = pref.getString(urlTag);
       bool isLoggedIn = pref.getBool(isLoggedInTag);
-
-      if (emailStr != null && emailStr != "") {
-        user = User(emailStr, tokenStr, urlStr, isLoggedIn);
+      user = new User(emailStr, tokenStr, urlStr, isLoggedIn);
+      if (isLoggedIn == null) {
+        user = User(null, null, null, false);
       }
       return user;
     });

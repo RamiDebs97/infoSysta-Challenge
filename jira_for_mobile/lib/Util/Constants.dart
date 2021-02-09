@@ -5,4 +5,5 @@ class Constants {
 
   //App Path
   static String logoPath = 'assets/Images/logo.png';
+  static String jiraAnimationPath = 'assets/Animation/jira.json';
 }

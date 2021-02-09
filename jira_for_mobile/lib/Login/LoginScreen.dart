@@ -137,11 +137,11 @@ class _LoginScreenState extends State<LoginScreen> {
       if (listOfTasks != null) {
         if (listOfTasks.isNotEmpty) {
           await SharedPreferenceWrapper.saveData(
-              controller.email, controller.token, controller.url, true);
-          Navigator.of(context)
-              .pushReplacementNamed('/home_screen', arguments: {
-            'listOfTasks': listOfTasks,
-          });
+                  controller.email, controller.token, controller.url, true)
+              .then((value) => Navigator.of(context)
+                      .pushReplacementNamed('/home_screen', arguments: {
+                    'listOfTasks': listOfTasks,
+                  }));
         } else {
           showDialog(
               context: context,
