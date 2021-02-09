@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:jira_for_mobile/Core%20Component/AppProvider.dart';
 import 'package:jira_for_mobile/Core%20Component/main/app_scaffold.dart';
 import 'package:jira_for_mobile/Core%20Component/text/AppText.dart';
 import 'package:jira_for_mobile/Home/HomeProvider.dart';
@@ -10,6 +11,7 @@ import 'package:jira_for_mobile/Home/SingleIssueItem.dart';
 import 'package:jira_for_mobile/Memory/SharedPreferenceWrapper.dart';
 import 'package:jira_for_mobile/Models/Issue.dart';
 import 'package:jira_for_mobile/Util/Constants.dart';
+import 'package:jira_for_mobile/theme/theme_config.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -57,7 +59,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 actions: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Provider.of<AppProvider>(context, listen: false).theme ==
+                              ThemeConfig.darkTheme
+                          ? Provider.of<AppProvider>(context, listen: false)
+                              .setTheme(ThemeConfig.lightTheme, 'light')
+                          : Provider.of<AppProvider>(context, listen: false)
+                              .setTheme(ThemeConfig.darkTheme, 'dark');
+                    },
                     child: Icon(Icons.nightlight_round),
                   ),
                   Padding(

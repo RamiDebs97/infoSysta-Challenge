@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jira_for_mobile/Core%20Component/AppProvider.dart';
 import 'package:jira_for_mobile/Home/HomeProvider.dart';
 import 'package:jira_for_mobile/Home/HomeScreen.dart';
 import 'package:jira_for_mobile/Login/LoginProvider.dart';
@@ -9,6 +10,7 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => AppProvider()),
     ChangeNotifierProvider(create: (_) => LoginProvider()),
     ChangeNotifierProvider(create: (_) => HomeProvider()),
   ], child: MainApp()));
@@ -17,16 +19,19 @@ void main() {
 class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: Constants.appName,
-      debugShowCheckedModeBanner: false,
-      theme: themeData(ThemeConfig.lightTheme),
-      darkTheme: themeData(ThemeConfig.darkTheme),
-      home: SplashScreen(),
-      routes: <String, WidgetBuilder>{
-        "/home_screen": (BuildContext context) => HomeScreen(),
-      },
-    );
+    return Consumer<AppProvider>(
+        builder: (BuildContext context, AppProvider appProvider, Widget child) {
+      return MaterialApp(
+        title: Constants.appName,
+        debugShowCheckedModeBanner: false,
+        theme: themeData(appProvider.theme),
+        darkTheme: themeData(ThemeConfig.darkTheme),
+        home: SplashScreen(),
+        routes: <String, WidgetBuilder>{
+          "/home_screen": (BuildContext context) => HomeScreen(),
+        },
+      );
+    });
   }
 }
 

@@ -41,15 +41,19 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-          child: Lottie.asset(
-        Constants.jiraAnimationPath,
-        height: 300,
-        width: 300,
-        controller: _controller,
-        repeat: false,
-      )),
-    );
+        backgroundColor: Colors.white,
+        body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          color: Theme.of(context).backgroundColor,
+          child: Center(
+              child: Lottie.asset(
+            Constants.jiraAnimationPath,
+            height: 300,
+            width: 300,
+            controller: _controller,
+            repeat: false,
+          )),
+        ));
   }
 }
