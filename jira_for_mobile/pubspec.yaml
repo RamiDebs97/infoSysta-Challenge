@@ -13,6 +13,8 @@ dependencies:
   provider: any
   dio: any
   cached_network_image: any
+  shared_preferences: any
+  
   flutter:
     sdk: flutter
 

@@ -5,6 +5,7 @@ import 'package:jira_for_mobile/Core%20Component/main/app_scaffold.dart';
 import 'package:jira_for_mobile/Core%20Component/text/AppText.dart';
 import 'package:jira_for_mobile/Core%20Component/text_fileds/app_form_field.dart';
 import 'package:jira_for_mobile/Login/LoginProvider.dart';
+import 'package:jira_for_mobile/Memory/SharedPreferenceWrapper.dart';
 import 'package:jira_for_mobile/Models/Issue.dart';
 import 'package:jira_for_mobile/Util/Constants.dart';
 import 'package:jira_for_mobile/Util/Functions.dart';
@@ -135,6 +136,8 @@ class _LoginScreenState extends State<LoginScreen> {
       });
       if (listOfTasks != null) {
         if (listOfTasks.isNotEmpty) {
+          await SharedPreferenceWrapper.saveData(
+              controller.email, controller.token, controller.url, true);
           Navigator.of(context)
               .pushReplacementNamed('/home_screen', arguments: {
             'listOfTasks': listOfTasks,

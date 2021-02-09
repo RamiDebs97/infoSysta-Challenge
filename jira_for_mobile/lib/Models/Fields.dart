@@ -23,5 +23,6 @@ class Fields {
     reporter = json['reporter'] != null
         ? new Assignee.fromJson(json['reporter'])
         : null;
+    duedate = json['duedate'];
   }
 }
